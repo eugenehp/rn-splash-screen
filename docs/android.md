@@ -14,7 +14,9 @@
     </style>
     ```
 
-3. In `android/app/src/main/java/com/__APPNAMES__/MainActivity.java`: Show this (from rn-splash-screen) splash screen and hide
+3. Move your `AppTheme` from your Application to your Activity ( see https://github.com/mehcode/rn-splash-screen/commit/3cdbb187c38ef8dcc129baef804aed70e2bce0e1 )
+
+4. In `android/app/src/main/java/com/__APPNAMES__/MainActivity.java`: Show this (from rn-splash-screen) splash screen and hide
    the native splash screen (from your modified theme) in `onCreate`.
 
     ```java
@@ -32,16 +34,7 @@
       @Override
       protected void onCreate(Bundle savedInstanceState) {
           // Show the js-controlled splash screen
-          SplashScreen.show(this);
-    
-          // After react is initialized; set our background color (override splash screen theme)
-          getReactNativeHost().getReactInstanceManager().addReactInstanceEventListener(new ReactInstanceManager.ReactInstanceEventListener() {
-              @Override
-              public void onReactContextInitialized(ReactContext context) {
-                  // Hide the native splash screen
-                  getWindow().getDecorView().setBackgroundColor(Color.WHITE);
-              }
-          });
+          SplashScreen.show(this, getReactInstanceManager());
     
           super.onCreate(savedInstanceState);
     
